@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <section class="dishes" id="dishes">
+    <br><br><br><br><br><br>
+        <h1 class="container" style="text-align: center">Search Results for "{{ query }} "</h1>
+
+
+    <div class="box-container">
+        {% for item in dishes %}
+        <div class="box">
+            <a href="#" class="fas fa-heart"></a>
+            <img src="{{ item.image_url.url}}" alt="">
+            <h3>{{ item.name }}</h3>
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+            <p class="card-text">{{ item.item_description }}</p>
+            <span> &#8358 {{ item.price }}</span>
+            <a href="{% url 'add_to_cart' item.id %}" class="btn">add to cart</a>
+        </div>
+            {% empty %}
+                    <h1 class="container" style="text-align: center">No Results found "{{ query }}"</h1>
+        {% endfor %}
+    </div>
+    </section>
+{% endblock %}

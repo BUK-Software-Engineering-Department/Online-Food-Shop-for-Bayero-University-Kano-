@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{%load static%}
+{% block content %}
+     <!-- hero section -->
+    <section class="hero">
+        <div class="hero-image">
+            <img src="{%static './images/hero1.jpg' %}" alt="hero-image" srcset="">
+            <div class="hero-text">
+              <p>Our special dish</p>
+              <h2>Burger</h2>
+              <p>Grab a quik meal with a drink</p>
+              <div class="item-price">
+                <p> &#8358 1,800</p>
+                <a href="#">order now</a>
+            </div>
+            </div>
+          </div>
+          <div class="hero-image">
+            <img src="{%static './images/hero1.jpg' %}" alt="hero-image" srcset="">
+            <div class="hero-text">
+              <p>Our special dish</p>
+              <h2>hot pizza</h2>
+              <p>Grab a quik meal with a drink</p>
+              <div class="item-price">
+                <p>&#8358 1,700</p>
+                <a href="{% url 'cart' %}">order now!</a>
+            </div>
+            </div>
+          </div>
+          <div class="hero-image">
+            <img src="{%static './images/hero2.jpg' %}" alt="hero-image" srcset="">
+            <div class="hero-text">
+              <p>our special dish</p>
+              <h2>Burger</h2>
+              <p>Grab a quik meal with a drink</p>
+              <div class="item-price">
+                <p>&#8358 1,800</p>
+                <a href="#">order now</a>
+            </div>
+            </div>
+          </div>
+          <div style="text-align:center">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+        </section>
+        <section class="dishes" id="dishes">
+            <br><br><br><br><br>
+        
+        
+             <h3 class="sub-heading"> our dishes </h3>
+            <h1 class="heading"> popular dishes </h1>
+        
+            <div class="box-container">
+                {% for item in dishes %}
+                <div class="box">
+                    <a href="#" class="fas fa-heart"></a>
+                    <img src="{{ item.image_url.url}}" alt="">
+                    <h3>{{ item.name }}</h3>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="card-text">{{ item.item_description }}</p>
+                    <span> &#8358 {{ item.price }}</span>
+                    <a href="{% url 'add_to_cart' item.id %}" class="btn add-to-cart-link" data-product-id="{{ i.id }}">add to cart</a>
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        
+                </div>
+                {% endfor %}
+            </div>
+            </section>
+        
+        
+        {# trending section #}
+             <section class="dishes" id="dishes">
+                <h1 class="heading" style="padding-top:20px; text-transform: capitalize"> Trending This Week </h1>
+                            <div class = 'cat_list'>
+                                <a href="{% url 'product_list_by_category' 'drinks' %}">Drinks</a>
+                                <a href="{% url 'product_list_by_category' 'gurasa' %}">Gurasa</a>
+                                <a href="{% url 'product_list_by_category' 'meats' %}">Meats</a>
+                                <a href="{% url 'product_list_by_category' 'pizza' %}">Pizza</a>
+                             </div>
+                <div class="box-container">
+                {% for item in trending %}
+                <div class="box">
+                    <a href="#" class="fas fa-heart"></a>
+                    <img src="{{ item.name.image_url.url}}" alt="">
+                    <h3>{{ item.name.name }}</h3>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="card-text">{{ item.name.item_description }}</p>
+                    <span> &#8358 {{ item.name.price }}</span>
+                    <a href="{% url 'add_to_cart' item.id %}" class="btn">add to cart</a>
+                </div>
+                {% endfor %}
+                </div>
+             </section>
+             {#    recommendation #}
+             <section class="dishes" id="dishes">
+         
+             <h3 class="sub-heading" style="padding: 20px 0">You May Like</h3>
+         
+             <div class="box-container">
+                 {% for i in recommend_item %}
+                 <div class="box">
+                     <a href="#" class="fas fa-heart"></a>
+                     <img src="{{ i.recommend_product.image_url.url}}" alt="">
+                     <h3>{{ i.recommend_product.name }}</h3>
+                     <div class="stars">
+                         <i class="fas fa-star"></i>
+                         <i class="fas fa-star"></i>
+                         <i class="fas fa-star"></i>
+                         <i class="fas fa-star"></i>
+                         <i class="fas fa-star-half-alt"></i>
+                     </div>
+                     <p class="card-text">{{ i.recommend_product.item_description }}</p>
+                     <span> &#8358 {{ i.recommend_product.price }}</span>
+                     <a href="{% url 'add_to_cart' i.id %}" class="btn">add to cart</a>
+                 </div>
+                 {% endfor %}
+             </div>
+             </section>
+
+     <h3 class="sub-heading"> customer's review </h3>
+    <h1 class="heading"> what they say </h1>
+    <div class="container">
+	    <div class="row">
+			{% for i in news %}
+				<div class="col-md-3" style="margin-bottom: 10px; padding: 0px 5px;">
+					<div class="card" style="">
+                        <div style="background: #020202 url({{ i.image.url}}); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100%; height: 250px;">
+                        </div>
+						<div class="card-body">
+							<h5 class="card-title"><a href="#">{{ i.title }}</a></h5>
+							<p class="card-text">{{ i.description }}</p>
+							<a href="#" class="btn btn-primary">read-more</a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+    </div>
+
+    <section class="about" id="about">
+
+        <h3 class="sub-heading"> about us </h3>
+        <h1 class="heading"> why choose us? </h1>
+
+        <div class="row">
+
+        <div class="image">
+            <img src="{% static 'images/about-img5.png' %}" alt="">
+        </div>
+
+        <div class="content">
+            <h3>best food in the campus</h3>
+            <div class="icons-container">
+                <div class="icons">
+                    <i class="fas fa-shipping-fast"></i>
+                    <span>free delivery</span>
+                </div>
+                <div class="icons">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>easy payments</span>
+                </div>
+                <div class="icons">
+                    <i class="fas fa-headset"></i>
+                    <span>service</span>
+                </div>
+            </div>
+            <a href="#" class="btn">learn moore</a>
+        </div>
+
+        </div>
+    </section>
+{% endblock %}

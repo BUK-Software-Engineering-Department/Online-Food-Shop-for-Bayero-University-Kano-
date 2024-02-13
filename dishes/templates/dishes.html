@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <section class="dishes" id="dishes">
+    <br><br><br><br><br>
+
+
+     <h3 class="sub-heading"> Our dishes </h3>
+    <h1 class="heading"> Popular dishes </h1>
+
+    <div class="box-container">
+        {% for item in dishes %}
+        <div class="box">
+            <a href="#" class="fas fa-heart"></a>
+            <img src="{{ item.image_url.url}}" alt="">
+            <h3>{{ item.name }}</h3>
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+            <p class="card-text">{{ item.item_description }}</p>
+            <span> &#8358 {{ item.price }}</span>
+            <a href="{% url 'add_to_cart' item.id %}" class="btn add-to-cart-link" data-product-id="{{ i.id }}">add to cart</a>
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+        </div>
+        {% endfor %}
+    </div>
+    </section>
+
+
+{# trending section #}
+     <section class="dishes" id="dishes">
+        <h1 class="heading" style="padding-top:20px; text-transform: capitalize"> Trending This Week </h1>
+                    <div class = 'cat_list'>
+                        <a href="{% url 'product_list_by_category' 'drinks' %}">Drinks</a>
+                        <a href="{% url 'product_list_by_category' 'gurasa' %}">Gurasa</a>
+                        <a href="{% url 'product_list_by_category' 'meats' %}">Meats</a>
+                        <a href="{% url 'product_list_by_category' 'pizza' %}">Pizza</a>
+                     </div>
+        <div class="box-container">
+        {% for item in trending %}
+        <div class="box">
+            <a href="#" class="fas fa-heart"></a>
+            <img src="{{ item.name.image_url.url}}" alt="">
+            <h3>{{ item.name.name }}</h3>
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+            <p class="card-text">{{ item.name.item_description }}</p>
+            <span> &#8358 {{ item.name.price }}</span>
+            <a href="{% url 'add_to_cart' item.id %}" class="btn">add to cart</a>
+        </div>
+        {% endfor %}
+        </div>
+     </section>
+
+
+{#    recommendation #}
+    <section class="dishes" id="dishes">
+
+    <h3 class="sub-heading" style="padding: 20px 0">You May Like</h3>
+
+    <div class="box-container">
+        {% for i in recommend_item %}
+        <div class="box">
+            <a href="#" class="fas fa-heart"></a>
+            <img src="{{ i.recommend_product.image_url.url}}" alt="">
+            <h3>{{ i.recommend_product.name }}</h3>
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+            <p class="card-text">{{ i.recommend_product.item_description }}</p>
+            <span> &#8358 {{ i.recommend_product.price }}</span>
+            <a href="{% url 'add_to_cart' i.id %}" class="btn">add to cart</a>
+        </div>
+        {% endfor %}
+    </div>
+    </section>
+{% endblock %}
