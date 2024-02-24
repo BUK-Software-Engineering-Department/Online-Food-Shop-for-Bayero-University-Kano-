@@ -43,11 +43,11 @@ input[type=submit]:hover {
   padding: 20px;
 }
 </style>
-<br><br><br><br><br><br>
+<br><br><br><br><br><br><br>
     <div class="container">
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-              <p style="text-align: center;"> Please fill in this form</p>
+              <p style="text-align: center;"> Please fill in this form (Review) </p>
               <hr>
                 <label for="name">Name</label>
                 {{ review_form.name }}
