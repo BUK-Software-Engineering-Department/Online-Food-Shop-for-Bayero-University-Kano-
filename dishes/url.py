@@ -9,6 +9,9 @@ urlpatterns = [
     path('search/', search_products, name='search_products'),
     path('cart/', cart, name='cart'),
     path('<int:id>/', add_to_cart, name='add_to_cart'),
+    path("order_summary/", views.checkout_order, name="order_summary"),
+   
+
 
 
 

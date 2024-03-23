@@ -1,1 +1,1 @@
-web: gunicorn TrezShop.wsgi
+pweb: gunicorn TrezShop.wsgi

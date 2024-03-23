@@ -5,7 +5,7 @@ from .models import Dishe
 from django.urls import reverse
 from django.db.models import Q, Sum
 from .models import FoodType, RecommendProduct, CartItem
-
+from . import models
 
 # Create your views here.
 def dishes(request):
@@ -61,3 +61,37 @@ def cart(request):
     else:
         cart_items = []
     return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
+
+
+def checkout_order(request):
+    # get all the cart items
+    cart_items = request.user.cartitem_set.all()
+
+    if cart_items.count():
+        # first create an order
+        order = models.CartItem.objects.create(user=request.user)
+
+        # replicate the cart items to order items and delete them from the cart
+        # for item in cart_items:
+        #     models.CartItem.objects.create(
+        #         order = order, product=item.name, amount=item.quantity, price=item.dishes.price
+        #     )
+        for item in cart_items:
+            if item.dishes:  # Check if 'dishes' exists
+                price = item.dishes.price
+            else:
+                # Handle the case where 'dishes' is missing (e.g., set default price, log an error)
+                price = 0.0  # Set a default price (adjust as needed)
+                # You might want to log an error or take other actions based on your specific requirements
+                print(f"Error: Item {item.name} has no 'dishes' attribute")
+
+            models.CartItem.objects.create(
+                order=order,
+                product=item.name,
+                amount=item.quantity,
+                price=price
+            )
+
+            item.delete()
+    
+    return redirect("dishes:order_summary")

@@ -6,9 +6,9 @@ from django.conf import settings
 class Dishe(models.Model):
     name = models.CharField(max_length=255)
     price = models.FloatField()
-    item_description = models.TextField()
-    stock = models.IntegerField()
-    image_url = models.ImageField(upload_to='static/dishes-image')
+    item_description = models.TextField(null=True)
+    stock = models.IntegerField(null=True)
+    image_url = models.ImageField(upload_to='static/dishes-image',null=True)
 
     def __str__(self):
         return self.name
